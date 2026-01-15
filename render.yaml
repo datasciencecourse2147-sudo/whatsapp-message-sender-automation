@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: whatsapp-message-sender
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: HEADLESS
+        value: true
+      - key: PORT
+        fromService:
+          type: web
+          name: whatsapp-message-sender
+          property: port

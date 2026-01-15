@@ -1,0 +1,64 @@
+goal:
+write a clean python program that can help me to send the message from python program to whatsapp.
+
+user can provide the csv file in the web page.
+which contain only phone numbers like this below :
+phone numbers may be 12 and 10 digits number because of country code of india that is +91
+9820137264
+917021429836
+9820137234
+918201572643
+note: there can me more than 3500 numbers in the csv file.
+so please provide the upload file, which will help user that can able to upload the csv file.
+
+after user provided the number he must give me custom message 
+here is the custom message:
+
+बदलाचा नवा संकल्प…
+राष्ट्रवादी काँग्रेस पक्षाच्या अधिकृत उमेदवार
+सौ. राजेश्री सुधीर फुलपगार
+अ प्रवर्ग – प्रभाग क्रमांक १४
+आपल्या प्रभागाच्या विकासासाठी, सक्षम आणि विश्वासार्ह नेतृत्वासाठी
+⏰ घड्याळ या चिन्हासमोर बटन क्रमांक ५ दाबून
+सौ. राजेश्री सुधीर फुलपगार यांना
+प्रचंड बहुमताने विजयी करा.
+दिनांक : १५ जानेवारी
+🕖 वेळ : सकाळी ७:०० ते सायंकाळी ५:३०
+आपले मत – आपला अधिकार.
+प्रभागाच्या उज्ज्वल भविष्यासाठी नक्की मतदान करा.
+
+NOTE : this is the correct format or every line is mandatory, each line start with new line.
+
+
+and after user provided csv file which contain number
+
+he will click the button "send message to the whatsapp"
+so please provide the click button.
+
+after user clicks the button-> that given message should send in the whatsapp automatically.
+for every number which is provided in the csv file or that numbers the csv file contains.
+
+use python programming language, selenium for automation
+
+here is my chrome version, i think you might need this :
+> Version 143.0.7499.193 (Official Build) (64-bit)
+
+i have only python installed in my laptop. so please take only that, and make a good web page.
+where user can upload the csv file. and send message.
+
+if you don't want to create the web page 
+here is the my csv file path which contain the numbers:
+D:\File_Download\message-sender\data.csv
+
+
+now please you add one more features , add one more text box for the user who whats to input the numbers, or if the person or user not having csv files.
+
+after user input the number in the text box and click the send button,than the futher logic is same as befor.
+
+
+i will provide you image and your work is to extract phone numbers from that image:
+and give me in sequence order like this below:
+7021429836
+9820137264
+and so on.
+OK, am i clear!

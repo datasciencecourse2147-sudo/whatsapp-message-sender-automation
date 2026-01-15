@@ -378,13 +378,22 @@ def send_whatsapp_messages(phone_numbers, message):
         # Setup Chrome options
         chrome_options = Options()
         
-        # Fix for Windows Chrome crash issues
+        # Headless mode for server environments (Render)
+        if os.getenv('RENDER') or os.getenv('HEADLESS', 'false').lower() == 'true':
+            chrome_options.add_argument('--headless=new')
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--window-size=1920,1080')
+            chrome_options.add_argument('--start-maximized')
+            chrome_options.add_argument('--disable-infobars')
+            chrome_options.add_argument('--disable-notifications')
+        
+        # Fix for server environments (Linux/Render)
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--disable-software-rasterizer')
         chrome_options.add_argument('--disable-extensions')
         chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_argument('--remote-debugging-port=9222')
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging', 'enable-automation'])
         chrome_options.add_experimental_option('useAutomationExtension', False)
         
@@ -538,11 +547,18 @@ def send_messages():
         return jsonify({'success': False, 'message': str(e)})
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    
     print("="*50)
     print("WhatsApp Message Sender")
     print("="*50)
-    print("\nStarting web server...")
-    print("Open your browser and go to: http://localhost:5000")
+    print(f"\nStarting web server on port {port}...")
+    if not debug:
+        print("Production mode")
+    else:
+        print("Development mode")
+        print("Open your browser and go to: http://localhost:5000")
     print("\nPress Ctrl+C to stop the server")
     print("="*50)
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=port, debug=debug)
