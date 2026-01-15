@@ -547,18 +547,13 @@ def send_messages():
         return jsonify({'success': False, 'message': str(e)})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    debug = os.environ.get('FLASK_ENV') == 'development'
-    
+    port = int(os.environ.get('PORT', 10000))
+
     print("="*50)
     print("WhatsApp Message Sender")
     print("="*50)
     print(f"\nStarting web server on port {port}...")
-    if not debug:
-        print("Production mode")
-    else:
-        print("Development mode")
-        print("Open your browser and go to: http://localhost:5000")
+    print("Production mode (Render)")
     print("\nPress Ctrl+C to stop the server")
     print("="*50)
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port)
