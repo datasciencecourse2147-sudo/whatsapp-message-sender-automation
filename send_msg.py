@@ -375,9 +375,13 @@ def send_whatsapp_messages(phone_numbers, message):
     try:
         print(f"Found {len(phone_numbers)} phone numbers")
         
-        # Setup Chrome options
+        # Setup Chromium options (for Docker deployment)
         chrome_options = Options()
-        
+
+        # Use Chromium binary (set in Dockerfile)
+        if os.getenv('CHROME_BIN'):
+            chrome_options.binary_location = os.getenv('CHROME_BIN')
+
         # Headless mode for server environments (Render)
         if os.getenv('RENDER') or os.getenv('HEADLESS', 'false').lower() == 'true':
             chrome_options.add_argument('--headless=new')
@@ -386,7 +390,7 @@ def send_whatsapp_messages(phone_numbers, message):
             chrome_options.add_argument('--start-maximized')
             chrome_options.add_argument('--disable-infobars')
             chrome_options.add_argument('--disable-notifications')
-        
+
         # Fix for server environments (Linux/Render)
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -396,14 +400,20 @@ def send_whatsapp_messages(phone_numbers, message):
         chrome_options.add_argument('--remote-debugging-port=9222')
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging', 'enable-automation'])
         chrome_options.add_experimental_option('useAutomationExtension', False)
-        
+
         # User data directory for session persistence
         user_data_dir = os.path.abspath('./whatsapp_session')
         chrome_options.add_argument(f'--user-data-dir={user_data_dir}')
         chrome_options.add_argument('--profile-directory=Default')
-        
-        # Initialize driver
-        service = Service(ChromeDriverManager().install())
+
+        # Initialize driver with Chromium
+        if os.getenv('CHROMEDRIVER_PATH'):
+            # Use system-installed ChromeDriver
+            service = Service(os.getenv('CHROMEDRIVER_PATH'))
+        else:
+            # Fallback to ChromeDriverManager
+            service = Service(ChromeDriverManager().install())
+
         driver = webdriver.Chrome(service=service, options=chrome_options)
         
         # Open WhatsApp Web
